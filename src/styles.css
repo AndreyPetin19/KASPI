@@ -74,7 +74,25 @@ button { border: 0; background: none; cursor: pointer; color: inherit; }
 .segmented button { border-radius:9px; font-weight:700; }
 .segmented button.selected { background:white; box-shadow:0 1px 4px rgba(0,0,0,.08); }
 
-.gov-search { margin:0 16px 14px; height:42px; background:#efeff5; color:#a2a2a8; border-radius:12px; display:flex; align-items:center; gap:8px; padding:0 12px; font-weight:600; font-size:18px; }
+.gov-search {
+  margin: 14px 16px 16px;
+
+  height: 44px;
+
+  background: #f1f1f5;
+  color: #a3a3a8;
+
+  border-radius: 11px;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 0 13px;
+
+  font-size: 16px;
+  font-weight: 400;
+}
 .doc-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; padding:0 16px; }
 .doc-card { height:100px; border-radius:14px; display:flex; flex-direction:column; justify-content:center; align-items:flex-start; gap:9px; padding:12px; text-align:left; font-weight:700; font-size:13px; }
 .doc-card svg { width:36px; height:28px; }
@@ -255,4 +273,145 @@ button { border: 0; background: none; cursor: pointer; color: inherit; }
   padding: 0;
   background: none;
   border: none;
+}
+
+.header {
+  height: 72px;
+  display: grid;
+  grid-template-columns: 54px 1fr 54px;
+  align-items: center;
+
+  /* убираем серую границу */
+  border-bottom: none;
+
+  padding-top: env(safe-area-inset-top);
+}
+
+.header h1 {
+  margin: 0;
+  text-align: center;
+
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.25px;
+}
+
+.segmented {
+  margin: 12px 16px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  background: #f0f0f4;
+  border-radius: 10px;
+  padding: 2px;
+  height: 44px;
+}
+
+.segmented button {
+  border-radius: 9px;
+
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.15px;
+}
+
+.segmented button.selected {
+  background: #ffffff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
+}
+
+
+.doc-card {
+  height: 100px;
+  border-radius: 14px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+
+  gap: 9px;
+  padding: 12px;
+
+  text-align: left;
+
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.15;
+
+  letter-spacing: -0.15px;
+}
+
+.doc-card svg {
+  width: 32px;
+  height: 26px;
+  stroke-width: 1.8;
+}
+
+.all-docs {
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 14px 16px;
+
+  color: #3277b9;
+
+  font-size: 17px;
+  font-weight: 500;
+
+  letter-spacing: -0.15px;
+}
+
+.gov-row {
+  min-height: 66px;
+
+  display: grid;
+  grid-template-columns: 44px 1fr 20px;
+
+  align-items: center;
+
+  padding: 9px 16px;
+
+  border-bottom: 1px solid #eeeeee;
+}
+
+.gov-row b {
+  display: block;
+
+  font-size: 16px;
+  font-weight: 500;
+
+  letter-spacing: -0.2px;
+  line-height: 1.2;
+}
+
+.gov-row small {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #929292;
+
+  font-size: 13px;
+  font-weight: 400;
+
+  line-height: 1.2;
+}
+
+.gov-row svg:first-child {
+  color: #ef4228;
+  stroke-width: 1.8;
+}
+
+.bottom-nav span {
+  font-weight: 500;
+  font-size: 12px;
+}
+
+body {
+  margin: 0;
+  background: #ffffff;
 }

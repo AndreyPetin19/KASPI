@@ -141,10 +141,18 @@ function Bank({ setPage }) {
   return (
     <div className="screen bank-screen">
       <div className="bank-header">
-        <Menu size={24}/>
-        <div className="bank-title"><div className="bank-logo">
-  <img src="/Kaspi-logo.png" alt="Kaspi" />
-</div><b>Мой Банк</b></div>
+
+        <button onClick={() => setPage("home")}>
+          <Menu size={24}/>
+        </button>
+
+        <div className="bank-title">
+          <div className="bank-logo">
+            <img src="/Kaspi-logo.png" alt="Kaspi" />
+          </div>
+          <b>Мой Банк</b>
+        </div>
+
         <div/>
       </div>
       {ACCOUNTS.map((a, i) => (

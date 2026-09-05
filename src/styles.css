@@ -419,13 +419,18 @@ body {
 .id-image-zoom {
   width: 100%;
   max-width: 360px;
-  overflow: hidden;
+
+  overflow: visible;
+
   touch-action: none;
+
   display: flex;
   align-items: center;
   justify-content: center;
-}
 
+  position: relative;
+  z-index: 20;
+}
 .uploaded-card {
   display: block;
   width: 100%;
@@ -448,7 +453,10 @@ body {
   align-items: center;
   justify-content: center;
 
-  overflow: hidden;
+  position: relative;
+  z-index: 20;
+
+  overflow: visible;
 
   touch-action: none;
   user-select: none;
@@ -472,4 +480,25 @@ body {
 
   user-select: none;
   -webkit-user-select: none;
+}
+
+.id-image-zoom .uploaded-card {
+  display: block;
+
+  width: 100%;
+  height: auto;
+
+  object-fit: contain;
+
+  transform-origin: center center;
+
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+
+  user-select: none;
+  -webkit-user-select: none;
+
+  will-change: transform;
 }

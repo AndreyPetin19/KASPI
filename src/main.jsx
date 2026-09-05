@@ -300,19 +300,11 @@ function IdDocument({ setPage }) {
         <>
          <div className="id-card-area">
   {image ? (
-    <div
-      className="id-image-zoom"
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-    >
+    <div className="id-image-zoom">
       <img
         className="uploaded-card"
         src={image}
         alt="Загруженный демонстрационный документ"
-        style={{
-          transform: `scale(${scale})`
-        }}
       />
     </div>
   ) : (

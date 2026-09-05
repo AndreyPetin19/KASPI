@@ -502,3 +502,23 @@ body {
 
   will-change: transform;
 }
+
+.id-image-zoom .uploaded-card {
+  display: block;
+
+  width: 100%;
+  height: auto;
+
+  object-fit: contain;
+
+  transform-origin: center center;
+  will-change: transform;
+
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+
+  user-select: none;
+  -webkit-user-select: none;
+}

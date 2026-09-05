@@ -258,9 +258,18 @@ function IdDocument({ setPage }) {
   const [showQr, setShowQr] = useState(false);
 
   const [scale, setScale] = useState(1);
+const [position, setPosition] = useState({ x: 0, y: 0 });
 
-  const pinchStartDistance = useRef(null);
-  const pinchStartScale = useRef(1);
+const gesture = useRef({
+  startDistance: 0,
+  startScale: 1,
+  startX: 0,
+  startY: 0,
+  startPosX: 0,
+  startPosY: 0,
+  pinchCenterX: 0,
+  pinchCenterY: 0,
+});
 
   const [fields, setFields] = useState(() => {
     try {
@@ -281,45 +290,119 @@ function IdDocument({ setPage }) {
     reader.readAsDataURL(file);
   };
 
-  const getTouchDistance = (touches) => {
-  const touch1 = touches[0];
-  const touch2 = touches[1];
+  
 
-  const x = touch2.clientX - touch1.clientX;
-  const y = touch2.clientY - touch1.clientY;
+const getDistance = (touches) => {
+  const dx = touches[1].clientX - touches[0].clientX;
+  const dy = touches[1].clientY - touches[0].clientY;
 
-  return Math.sqrt(x * x + y * y);
+  return Math.hypot(dx, dy);
 };
 
-const handleZoomStart = (e) => {
-  if (e.touches.length !== 2) return;
+const getCenter = (touches) => ({
+  x: (touches[0].clientX + touches[1].clientX) / 2,
+  y: (touches[0].clientY + touches[1].clientY) / 2,
+});
 
-  pinchStartDistance.current = getTouchDistance(e.touches);
-  pinchStartScale.current = scale;
+const handleZoomStart = (e) => {
+  // PINCH — два пальца
+  if (e.touches.length === 2) {
+    const center = getCenter(e.touches);
+
+    gesture.current.startDistance = getDistance(e.touches);
+    gesture.current.startScale = scale;
+
+    gesture.current.startPosX = position.x;
+    gesture.current.startPosY = position.y;
+
+    gesture.current.pinchCenterX = center.x;
+    gesture.current.pinchCenterY = center.y;
+
+    return;
+  }
+
+  // PAN — один палец
+  if (e.touches.length === 1 && scale > 1) {
+    gesture.current.startX = e.touches[0].clientX;
+    gesture.current.startY = e.touches[0].clientY;
+
+    gesture.current.startPosX = position.x;
+    gesture.current.startPosY = position.y;
+  }
 };
 
 const handleZoomMove = (e) => {
-  if (e.touches.length !== 2) return;
-  if (!pinchStartDistance.current) return;
+  // ZOOM двумя пальцами
+  if (e.touches.length === 2) {
+    const distance = getDistance(e.touches);
+    const center = getCenter(e.touches);
 
-  const currentDistance = getTouchDistance(e.touches);
+    const ratio =
+      distance / gesture.current.startDistance;
 
-  const zoom =
-    currentDistance / pinchStartDistance.current;
+    const newScale = Math.min(
+      4,
+      Math.max(1, gesture.current.startScale * ratio)
+    );
 
-  const newScale =
-    pinchStartScale.current * zoom;
+    const scaleRatio =
+      newScale / gesture.current.startScale;
 
-  const limitedScale =
-    Math.min(4, Math.max(1, newScale));
+    const centerMoveX =
+      center.x - gesture.current.pinchCenterX;
 
-  setScale(limitedScale);
+    const centerMoveY =
+      center.y - gesture.current.pinchCenterY;
+
+    setScale(newScale);
+
+    setPosition({
+      x:
+        gesture.current.startPosX * scaleRatio +
+        centerMoveX,
+
+      y:
+        gesture.current.startPosY * scaleRatio +
+        centerMoveY,
+    });
+
+    return;
+  }
+
+  // ПЕРЕМЕЩЕНИЕ одним пальцем
+  if (e.touches.length === 1 && scale > 1) {
+    const dx =
+      e.touches[0].clientX - gesture.current.startX;
+
+    const dy =
+      e.touches[0].clientY - gesture.current.startY;
+
+    setPosition({
+      x: gesture.current.startPosX + dx,
+      y: gesture.current.startPosY + dy,
+    });
+  }
 };
 
-const handleZoomEnd = () => {
-  pinchStartDistance.current = null;
-  pinchStartScale.current = scale;
+const handleZoomEnd = (e) => {
+  if (e.touches.length === 0 && scale <= 1.02) {
+    setScale(1);
+    setPosition({ x: 0, y: 0 });
+  }
+
+  // После pinch остался один палец —
+  // начинаем pan с его текущей позиции
+  if (e.touches.length === 1) {
+    gesture.current.startX = e.touches[0].clientX;
+    gesture.current.startY = e.touches[0].clientY;
+
+    gesture.current.startPosX = position.x;
+    gesture.current.startPosY = position.y;
+  }
 };
+
+
+
 
   const share = async () => {
     const text = "Демонстрационный документ из прототипа.";
@@ -340,7 +423,7 @@ const handleZoomEnd = () => {
 
       {tab === "doc" ? (
         <>
-        <div className="id-card-area">
+       <div className="id-card-area">
   {image ? (
     <div
       className="id-image-zoom"
@@ -355,7 +438,7 @@ const handleZoomEnd = () => {
         alt="Загруженный демонстрационный документ"
         draggable="false"
         style={{
-          transform: `scale(${scale})`
+          transform: `translate3d(${position.x}px, ${position.y}px, 0) scale(${scale})`
         }}
       />
     </div>
@@ -364,6 +447,7 @@ const handleZoomEnd = () => {
       <Upload size={35}/>
       <b>Загрузить изображение</b>
       <span>Используйте тестовое изображение для демонстрации</span>
+
       <input
         type="file"
         accept="image/*"
@@ -372,7 +456,6 @@ const handleZoomEnd = () => {
     </label>
   )}
 </div>
-
           <div className="id-actions">
             <button className="primary-blue" onClick={() => setShowQr(true)}><QrCode/>Предъявить документ</button>
             <button className="outline-blue" onClick={share}><Share2/>Отправить документ</button>

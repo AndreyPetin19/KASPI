@@ -317,8 +317,11 @@ function IdDocument({ setPage }) {
           <div className="qr-modal" onClick={e=>e.stopPropagation()}>
             <button className="modal-x" onClick={() => setShowQr(false)}><X/></button>
             <QRCodeSVG value="https://kaspi.kz" size={240} includeMargin />
-            <b>Демонстрационный QR</b>
-            <span>Ведёт на публичный сайт kaspi.kz</span>
+            <b>Покажите сотруднику 
+                    или
+              скажите код
+            </b>
+            <span>468497</span>
           </div>
         </div>
       )}

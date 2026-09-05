@@ -256,8 +256,16 @@ function IdDocument({ setPage }) {
   const [tab, setTab] = useState("doc");
   const [image, setImage] = useState("");
   const [showQr, setShowQr] = useState(false);
+
+  const [scale, setScale] = useState(1);
+  const [lastDistance, setLastDistance] = useState(null);
+
   const [fields, setFields] = useState(() => {
-    try { return JSON.parse(localStorage.getItem("demo-id-fields")) || {}; } catch { return {}; }
+    try {
+      return JSON.parse(localStorage.getItem("demo-id-fields")) || {};
+    } catch {
+      return {};
+    }
   });
 
   useEffect(() => { loadImage().then(setImage).catch(()=>{}); }, []);
@@ -290,16 +298,36 @@ function IdDocument({ setPage }) {
 
       {tab === "doc" ? (
         <>
-          <div className="id-card-area">
-            {image ? <img className="uploaded-card" src={image} alt="Загруженный демонстрационный документ"/> :
-              <label className="upload-placeholder">
-                <Upload size={35}/>
-                <b>Загрузить изображение</b>
-                <span>Используйте тестовое изображение для демонстрации</span>
-                <input type="file" accept="image/*" onChange={onUpload}/>
-              </label>}
-          </div>
-
+         <div className="id-card-area">
+  {image ? (
+    <div
+      className="id-image-zoom"
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
+      <img
+        className="uploaded-card"
+        src={image}
+        alt="Загруженный демонстрационный документ"
+        style={{
+          transform: `scale(${scale})`
+        }}
+      />
+    </div>
+  ) : (
+    <label className="upload-placeholder">
+      <Upload size={35}/>
+      <b>Загрузить изображение</b>
+      <span>Используйте тестовое изображение для демонстрации</span>
+      <input
+        type="file"
+        accept="image/*"
+        onChange={onUpload}
+      />
+    </label>
+  )}
+</div>
           <div className="id-actions">
             <button className="primary-blue" onClick={() => setShowQr(true)}><QrCode/>Предъявить документ</button>
             <button className="outline-blue" onClick={share}><Share2/>Отправить документ</button>

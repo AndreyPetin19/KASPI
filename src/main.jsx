@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { createRoot } from "react-dom/client";
 import {
   ArrowLeft,
@@ -258,7 +258,9 @@ function IdDocument({ setPage }) {
   const [showQr, setShowQr] = useState(false);
 
   const [scale, setScale] = useState(1);
-  const [lastDistance, setLastDistance] = useState(null);
+
+  const pinchStartDistance = useRef(null);
+  const pinchStartScale = useRef(1);
 
   const [fields, setFields] = useState(() => {
     try {
@@ -279,6 +281,46 @@ function IdDocument({ setPage }) {
     reader.readAsDataURL(file);
   };
 
+  const getTouchDistance = (touches) => {
+  const touch1 = touches[0];
+  const touch2 = touches[1];
+
+  const x = touch2.clientX - touch1.clientX;
+  const y = touch2.clientY - touch1.clientY;
+
+  return Math.sqrt(x * x + y * y);
+};
+
+const handleZoomStart = (e) => {
+  if (e.touches.length !== 2) return;
+
+  pinchStartDistance.current = getTouchDistance(e.touches);
+  pinchStartScale.current = scale;
+};
+
+const handleZoomMove = (e) => {
+  if (e.touches.length !== 2) return;
+  if (!pinchStartDistance.current) return;
+
+  const currentDistance = getTouchDistance(e.touches);
+
+  const zoom =
+    currentDistance / pinchStartDistance.current;
+
+  const newScale =
+    pinchStartScale.current * zoom;
+
+  const limitedScale =
+    Math.min(4, Math.max(1, newScale));
+
+  setScale(limitedScale);
+};
+
+const handleZoomEnd = () => {
+  pinchStartDistance.current = null;
+  pinchStartScale.current = scale;
+};
+
   const share = async () => {
     const text = "Демонстрационный документ из прототипа.";
     if (navigator.share) {
@@ -298,13 +340,23 @@ function IdDocument({ setPage }) {
 
       {tab === "doc" ? (
         <>
-         <div className="id-card-area">
+        <div className="id-card-area">
   {image ? (
-    <div className="id-image-zoom">
+    <div
+      className="id-image-zoom"
+      onTouchStart={handleZoomStart}
+      onTouchMove={handleZoomMove}
+      onTouchEnd={handleZoomEnd}
+      onTouchCancel={handleZoomEnd}
+    >
       <img
         className="uploaded-card"
         src={image}
         alt="Загруженный демонстрационный документ"
+        draggable="false"
+        style={{
+          transform: `scale(${scale})`
+        }}
       />
     </div>
   ) : (
@@ -320,6 +372,7 @@ function IdDocument({ setPage }) {
     </label>
   )}
 </div>
+
           <div className="id-actions">
             <button className="primary-blue" onClick={() => setShowQr(true)}><QrCode/>Предъявить документ</button>
             <button className="outline-blue" onClick={share}><Share2/>Отправить документ</button>

@@ -12,6 +12,17 @@ button { border: 0; background: none; cursor: pointer; color: inherit; }
 .screen { min-height: 100dvh; background: white; position: relative; }
 .with-nav { padding-bottom: 88px; }
 
+.prototype-badge {
+  position: fixed;
+  z-index: 9999;
+  right: 10px;
+  bottom: 78px;
+  font-size: 9px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+}
+
 
 .bottom-nav {
   position: fixed; z-index: 40; bottom: 0; left: 50%; transform: translateX(-50%);
@@ -78,7 +89,8 @@ button { border: 0; background: none; cursor: pointer; color: inherit; }
 .bank-screen { padding-bottom:70px; }
 .bank-header { height:56px; display:grid; grid-template-columns:44px 1fr 44px; align-items:center; padding:0 14px; }
 .bank-title { display:flex; align-items:center; justify-content:center; gap:8px; }
-.bank-logo { width:26px; height:26px; border-radius:50%; background:#e54439; color:white; display:grid; place-items:center; font-weight:800; }
+.bank-logo { width:28px; height:28px; display:flex; align-items:center; justify-content:center; }
+.bank-logo img { width:100%; height:100%; object-fit:contain; display:block; }
 .account-row { display:grid; grid-template-columns:48px 1fr auto; gap:10px; align-items:center; padding:10px 14px; border-bottom:1px solid #e8e8e8; }
 .acc-icon { width:40px;height:36px;border-radius:4px;display:grid;place-items:center;color:white;font-weight:800;font-size:12px; }
 .acc-icon.gold{background:#d9bd76}.acc-icon.red{background:#e6453f}.acc-icon.deposit{background:#e7d21c}.acc-icon.loan{background:#ee4b38}.acc-icon.bonus{background:#4a9e24}

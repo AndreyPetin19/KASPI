@@ -1,13 +1,36 @@
 import React, { useEffect, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import {
-  ArrowLeft, Search, ShoppingCart, Smartphone, ReceiptText, Repeat2,
-  TrainFront, Landmark, Building2, House, QrCode, MessageSquare, Menu,
-  CreditCard, Plus, Coins, Copy, Upload, Share2, Camera, X,
-  GraduationCap, FileText, ChevronRight, WalletCards, BadgePercent
+  ArrowLeft,
+  Search,
+  ShoppingCart,
+  Smartphone,
+  ReceiptText,
+  Repeat2,
+  TrainFront,
+  Landmark,
+  Building2,
+  House,
+  QrCode,
+  MessageSquare,
+  Menu,
+  CreditCard,
+  Plus,
+  Copy,
+  Upload,
+  Share2,
+  X,
+  GraduationCap,
+  FileText,
+  ChevronRight,
+  BadgePercent
 } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 import "./styles.css";
+
+function PrototypeBadge() {
+  return <div className="prototype-badge">.</div>;
+}
 
 const ACCOUNTS = [
   { icon: "gold", title: "Kaspi Gold", sub: "*1234", amount: "150 000 ₸" },
@@ -100,7 +123,7 @@ function Home({ setPage }) {
         <div className="recent-card"></div><div className="recent-card"></div><div className="recent-card"></div>
       </div>
 
-      <PrototypeBadge/>
+      <PrototypeBadge />
     </div>
   );
 }
@@ -134,7 +157,7 @@ function Bank({ setPage }) {
           {i < 3 && <div className="action-row"><Plus size={20}/><span>{i===0 ? "Оформить Kaspi Gold для ребенка" : i===1 ? "Открыть дополнительный продукт" : "Открыть Депозит"}</span></div>}
         </React.Fragment>
       ))}
-      <PrototypeBadge/>
+      <PrototypeBadge />
     </div>
   );
 }
@@ -163,7 +186,7 @@ function CameraPage({ setPage }) {
         <div className="camera-caption">Наведите камеру на QR-код</div>
         {error && <div className="camera-error">{error}</div>}
       </div>
-      <PrototypeBadge/>
+      
     </div>
   );
 }
@@ -176,7 +199,7 @@ function Gov({ setPage }) {
       <div className="gov-search"><Search size={22}/><span>Поиск по Госуслугам</span></div>
       <div className="doc-cards">
         <button className="doc-card mint" onClick={() => setPage("id")}><CreditCard/><span>Удостоверение<br/>личности</span></button>
-        <button className="doc-card cyan"><WalletCards/><span>Паспорт<br/>гражданина РК</span></button>
+        <button className="doc-card cyan"><CreditCard/><span>Паспорт<br/>гражданина РК</span></button>
         <button className="doc-card blue-lite"><GraduationCap/><span>Студенческий<br/>билет</span></button>
       </div>
       <button className="all-docs">Все документы <ChevronRight/></button>
@@ -190,13 +213,13 @@ function Gov({ setPage }) {
           </div>
         ))}
       </div>
-      <PrototypeBadge/>
+      
     </div>
   );
 }
 
 function idbOpen() {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => { 
     const req = indexedDB.open("olympiadPrototype", 1);
     req.onupgradeneeded = () => req.result.createObjectStore("media");
     req.onsuccess = () => resolve(req.result);
@@ -299,10 +322,11 @@ function IdDocument({ setPage }) {
           </div>
         </div>
       )}
-      <PrototypeBadge/>
+      
     </div>
   );
 }
+
 
 function App() {
   const [page, setPage] = useState("home");

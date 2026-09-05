@@ -113,11 +113,30 @@ button { border: 0; background: none; cursor: pointer; color: inherit; }
 
 .id-screen { padding-bottom:36px; }
 .id-tabs { margin-top:12px; }
-.id-card-area { min-height:470px; display:grid; place-items:center; padding:22px 18px; }
+.id-card-area {
+  min-height: 470px;
+  display: grid;
+  place-items: center;
+  padding: 22px 18px;
+  background: transparent;
+}
+
+.uploaded-card {
+  display: block;
+  width: 100%;
+  max-width: 360px;
+  height: auto;
+  max-height: 460px;
+  object-fit: contain;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+}
 .upload-placeholder { width:100%; min-height:260px; border:2px dashed #c9c9c9; border-radius:18px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; color:#777; text-align:center; padding:20px; }
 .upload-placeholder input { display:none; }
 .upload-placeholder b{color:#333}.upload-placeholder span{font-size:13px;max-width:260px}
-.uploaded-card { max-width:100%; max-height:460px; object-fit:contain; border-radius:18px; box-shadow:0 10px 28px rgba(0,0,0,.12); }
+
 .id-actions { padding:0 16px 78px; display:grid; gap:12px; }
 .primary-blue,.outline-blue { min-height:56px; border-radius:12px; display:flex; align-items:center; justify-content:center; gap:10px; font-size:17px; }
 .primary-blue{background:#3476d4;color:white}.outline-blue{border:1.5px solid #2c6fb8;color:#2c6fb8;background:white}

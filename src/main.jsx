@@ -1523,7 +1523,7 @@ function PinScreen({ onUnlock }) {
 
 
       <div className="pin-prototype">
-        ПРОТОТИП
+        .
       </div>
 
     </div>

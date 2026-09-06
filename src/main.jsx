@@ -1420,6 +1420,22 @@ function PinScreen({ onUnlock }) {
     }
   };
 
+
+  const [displayName, setDisplayName] = useState(
+  () => localStorage.getItem("demo-display-name") || "Пользователь"
+);
+
+const [editingName, setEditingName] = useState(false);
+
+
+const saveDisplayName = (value) => {
+  const cleanValue = value.trim() || "Пользователь";
+
+  setDisplayName(cleanValue);
+  localStorage.setItem("demo-display-name", cleanValue);
+  setEditingName(false);
+};
+
   const removeNumber = () => {
     setPin((prev) => prev.slice(0, -1));
   };
@@ -1447,9 +1463,29 @@ function PinScreen({ onUnlock }) {
           />
         </div>
 
-        <div className="pin-name">
-          Пользователь
-        </div>
+        <div className="pin-name-wrap">
+  {editingName ? (
+    <input
+      className="pin-name-input"
+      defaultValue={displayName}
+      autoFocus
+      maxLength={20}
+      onBlur={(e) => saveDisplayName(e.target.value)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") {
+          saveDisplayName(e.currentTarget.value);
+        }
+      }}
+    />
+  ) : (
+    <button
+      className="pin-name"
+      onClick={() => setEditingName(true)}
+    >
+      {displayName}
+    </button>
+  )}
+</div>
 
       </div>
 

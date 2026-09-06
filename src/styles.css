@@ -802,3 +802,52 @@ body {
 
   pointer-events: none;
 }
+
+.pin-name-wrap {
+  margin-top: 11px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  min-height: 28px;
+}
+
+.pin-name {
+  border: none;
+  background: transparent;
+  padding: 4px 8px;
+
+  font-size: 13px;
+  font-weight: 400;
+
+  color: #555b61;
+
+  text-align: center;
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pin-name-input {
+  width: 150px;
+
+  border: none;
+  border-bottom: 1px solid #d9d9d9;
+
+  background: transparent;
+
+  outline: none;
+
+  padding: 4px 6px;
+
+  font-size: 13px;
+  font-weight: 400;
+
+  color: #555b61;
+
+  text-align: center;
+}
+
+.pin-name-input:focus {
+  border-bottom-color: #999;
+}

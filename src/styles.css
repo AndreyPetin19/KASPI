@@ -522,3 +522,283 @@ body {
   user-select: none;
   -webkit-user-select: none;
 }
+
+/* =========================
+   PIN SCREEN
+   ========================= */
+
+.pin-screen {
+  width: 100%;
+  min-height: 100dvh;
+
+  background: #fff;
+
+  display: flex;
+  flex-direction: column;
+
+  position: relative;
+
+  overflow: hidden;
+
+  color: #222;
+
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+
+/* верхние кнопки */
+
+.pin-header {
+  height: 48px;
+
+  padding:
+    calc(env(safe-area-inset-top) + 3px)
+    12px
+    0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pin-header-button {
+  width: 34px;
+  height: 34px;
+
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: transparent;
+
+  border: none;
+
+  color: #6c7077;
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+
+/* профиль */
+
+.pin-profile {
+  margin-top: 8px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+}
+
+.pin-avatar {
+  width: 54px;
+  height: 54px;
+
+  border-radius: 50%;
+
+  overflow: hidden;
+
+  background: #eee;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pin-avatar img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+.pin-name {
+  margin-top: 11px;
+
+  font-size: 13px;
+  font-weight: 400;
+
+  color: #555b61;
+}
+
+
+/* код доступа */
+
+.pin-access {
+  margin-top: 92px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+}
+
+.pin-access-title {
+  font-size: 13px;
+
+  color: #555b61;
+
+  font-weight: 400;
+}
+
+.pin-dots {
+  height: 26px;
+
+  margin-top: 11px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 17px;
+}
+
+.pin-dot {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: #ededed;
+
+  transition:
+    background 0.12s ease,
+    transform 0.12s ease;
+}
+
+.pin-dot.filled {
+  background: #555b61;
+
+  transform: scale(1.05);
+}
+
+
+/* цифровая клавиатура */
+
+.pin-keypad {
+  width: 100%;
+
+  margin-top: auto;
+
+  padding:
+    0
+    42px
+    0;
+
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  grid-template-rows: repeat(4, 64px);
+
+  column-gap: 28px;
+
+  row-gap: 0;
+
+  align-items: center;
+}
+
+.pin-key,
+.pin-face,
+.pin-delete {
+  width: 100%;
+  height: 64px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+
+  background: transparent;
+
+  padding: 0;
+
+  color: #34373b;
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pin-key {
+  font-size: 25px;
+
+  font-weight: 300;
+
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+.pin-key:active {
+  opacity: 0.35;
+}
+
+.pin-face {
+  color: #676c72;
+}
+
+.pin-face:active {
+  opacity: 0.4;
+}
+
+.pin-delete {
+  font-size: 20px;
+
+  color: #666b70;
+
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* если хочешь видеть удаление —
+   поменяй opacity: 0 на opacity: 1 */
+
+
+.pin-forgot {
+  margin:
+    9px
+    auto
+    calc(env(safe-area-inset-bottom) + 15px);
+
+  border: none;
+
+  background: transparent;
+
+  padding: 8px;
+
+  font-size: 12px;
+
+  font-weight: 400;
+
+  color: #587ba6;
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pin-forgot:active {
+  opacity: 0.55;
+}
+
+
+/* минимальная отметка демо */
+
+.pin-prototype {
+  position: absolute;
+
+  right: 8px;
+  bottom: 5px;
+
+  font-size: 7px;
+  font-weight: 400;
+
+  color: rgba(0, 0, 0, 0.28);
+
+  pointer-events: none;
+}
